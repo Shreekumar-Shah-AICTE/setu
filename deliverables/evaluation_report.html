@@ -19,7 +19,7 @@
   .card .l { font-size:12px; color:#556; }
 </style></head><body><div class="wrap">
 <h1>SETU — Evaluation Report</h1>
-<p class="muted">Generated 2026-08-05 22:51 UTC · provider <code>mock</code> · metrics on the held-out <b>test</b> split.</p>
+<p class="muted">Generated 2026-08-05 23:05 UTC · provider <code>mock</code> · metrics on the held-out <b>test</b> split.</p>
 
 <div class="cards">
   <div class="card"><div class="v">0.929</div><div class="l">macro-F1 (headline)</div></div>
@@ -32,12 +32,27 @@
 
 <h2>Ablation: why not just use the LLM for everything?</h2>
 <table><thead><tr><th>Config</th><th>Description</th><th>macro-F1</th><th>accuracy</th>
-<th>mean ms</th><th>LLM/1k</th></tr></thead><tbody><tr class=''><td>A_lexical_only</td><td>Lexical only</td><td>0.939</td><td>0.938</td><td>4.3</td><td>0</td></tr><tr class=''><td>B_semantic_only</td><td>Semantic only</td><td>0.701</td><td>0.742</td><td>4.4</td><td>0</td></tr><tr class=''><td>C_fusion_no_arbiter</td><td>Lexical + semantic fusion, no arbiter</td><td>0.920</td><td>0.917</td><td>4.4</td><td>0</td></tr><tr class='ship'><td>D_full_cascade</td><td>Full cascade (shipped system)</td><td>0.929</td><td>0.928</td><td>14.2</td><td>175</td></tr><tr class=''><td>E_arbiter_only</td><td>Arbiter only (every grievance to the LLM)</td><td>0.818</td><td>0.866</td><td>61.9</td><td>1000</td></tr></tbody></table>
+<th>mean ms</th><th>LLM/1k</th></tr></thead><tbody><tr class=''><td>A_lexical_only</td><td>Lexical only</td><td>0.939</td><td>0.938</td><td>4.5</td><td>0</td></tr><tr class=''><td>B_semantic_only</td><td>Semantic only</td><td>0.701</td><td>0.742</td><td>4.4</td><td>0</td></tr><tr class=''><td>C_fusion_no_arbiter</td><td>Lexical + semantic fusion, no arbiter</td><td>0.920</td><td>0.917</td><td>4.4</td><td>0</td></tr><tr class='ship'><td>D_full_cascade</td><td>Full cascade (shipped system)</td><td>0.929</td><td>0.928</td><td>14.4</td><td>175</td></tr><tr class=''><td>E_arbiter_only</td><td>Arbiter only (every grievance to the LLM)</td><td>0.818</td><td>0.866</td><td>62.1</td><td>1000</td></tr></tbody></table>
 <p>Config <b>E</b> sends every grievance to the LLM; Config <b>D</b> (shipped) reaches comparable
 quality while calling the model on only the ambiguous minority. That gap in <em>LLM calls / 1k</em>
 is the engineering argument of the project.</p>
 
 
+        <h2>Ablation with real multilingual embeddings (build sandbox)</h2>
+        <p class='muted'>Provider <code>local</code> ·
+        model <code>intfloat/multilingual-e5-small</code>
+        (384 dims) · 2026-08-05<br>
+        Command: <code>LLM_PROVIDER=local python -m app.cli evaluate --ablation</code></p>
+        <table><thead><tr><th>Config</th><th>Description</th><th>macro-F1</th><th>accuracy</th>
+        <th>mean ms</th><th>LLM/1k</th></tr></thead><tbody><tr class=''><td>A_lexical_only</td><td>Lexical only</td><td>0.939</td><td>0.938</td><td>28.0</td><td>0</td></tr><tr class=''><td>B_semantic_only</td><td>Semantic only</td><td>0.565</td><td>0.608</td><td>28.3</td><td>0</td></tr><tr class=''><td>C_fusion_no_arbiter</td><td>Lexical + semantic fusion, no arbiter</td><td>0.930</td><td>0.928</td><td>26.2</td><td>0</td></tr><tr class='ship'><td>D_full_cascade</td><td>Full cascade (shipped system)</td><td>0.939</td><td>0.938</td><td>85.6</td><td>928</td></tr><tr class=''><td>E_arbiter_only</td><td>Arbiter only (every grievance to the LLM)</td><td>0.821</td><td>0.866</td><td>88.5</td><td>1000</td></tr></tbody></table>
+        <p>Real embeddings move Config D macro-F1 from <b>0.929</b> (mock) to
+        <b>0.939</b>. The stand-in is a small 384-dim model
+        (no query/passage prefixes); its flatter cosine distribution pushes more traffic to the
+        arbiter under the current gate thresholds. Because embeddings are stored as JSON, the
+        dimensionality change (384 vs 1024) needs only a <b>centroid re-seed, not a schema change</b>.
+        bge-m3 (1024-dim, the exact gateway model) should improve quality further while restoring
+        sharp confidence.</p>
+        
 
 <h2>Per-department F1</h2>
 <svg width='460' height='318' role='img' font-family='sans-serif' font-size='12'><text x='0' y='21' fill='#222'>AGRICULTURE</text><rect x='150' y='5' width='205' height='22' fill='#1B365D' rx='3'/><text x='360' y='21' fill='#444'>0.824</text><text x='0' y='49' fill='#222'>COTTAGE</text><rect x='150' y='33' width='235' height='22' fill='#1B365D' rx='3'/><text x='390' y='49' fill='#444'>0.941</text><text x='0' y='77' fill='#222'>ENERGY</text><rect x='150' y='61' width='238' height='22' fill='#1B365D' rx='3'/><text x='393' y='77' fill='#444'>0.952</text><text x='0' y='105' fill='#222'>ENVIRONMENT</text><rect x='150' y='89' width='222' height='22' fill='#1B365D' rx='3'/><text x='377' y='105' fill='#444'>0.889</text><text x='0' y='133' fill='#222'>FINANCE</text><rect x='150' y='117' width='235' height='22' fill='#1B365D' rx='3'/><text x='390' y='133' fill='#444'>0.941</text><text x='0' y='161' fill='#222'>FISHERIES</text><rect x='150' y='145' width='250' height='22' fill='#1B365D' rx='3'/><text x='405' y='161' fill='#444'>1.000</text><text x='0' y='189' fill='#222'>FOOD_CIVIL</text><rect x='150' y='173' width='225' height='22' fill='#1B365D' rx='3'/><text x='380' y='189' fill='#444'>0.900</text><text x='0' y='217' fill='#222'>HOME</text><rect x='150' y='201' width='235' height='22' fill='#1B365D' rx='3'/><text x='390' y='217' fill='#444'>0.941</text><text x='0' y='245' fill='#222'>INDUSTRY</text><rect x='150' y='229' width='222' height='22' fill='#1B365D' rx='3'/><text x='377' y='245' fill='#444'>0.889</text><text x='0' y='273' fill='#222'>MINES</text><rect x='150' y='257' width='235' height='22' fill='#1B365D' rx='3'/><text x='390' y='273' fill='#444'>0.941</text><text x='0' y='301' fill='#222'>OTHER</text><rect x='150' y='285' width='250' height='22' fill='#1B365D' rx='3'/><text x='405' y='301' fill='#444'>1.000</text></svg>

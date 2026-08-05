@@ -1,6 +1,6 @@
 # SETU — Evaluation Report
 
-_Generated 2026-08-05 22:51 UTC · provider `mock` · metrics on the **held-out test split** only._
+_Generated 2026-08-05 23:05 UTC · provider `mock` · metrics on the **held-out test split** only._
 
 ## Why macro-F1 is the headline metric
 
@@ -14,11 +14,11 @@ Centroids are fit on the **dev** split (40%). Every number below is computed on 
 
 | Config | Description | macro-F1 | accuracy | mean ms | LLM calls / 1k |
 | --- | --- | ---: | ---: | ---: | ---: |
-| A_lexical_only | Lexical only | 0.939 | 0.938 | 4.3 | 0 |
+| A_lexical_only | Lexical only | 0.939 | 0.938 | 4.5 | 0 |
 | B_semantic_only | Semantic only | 0.701 | 0.742 | 4.4 | 0 |
 | C_fusion_no_arbiter | Lexical + semantic fusion, no arbiter | 0.920 | 0.917 | 4.4 | 0 |
-| D_full_cascade | Full cascade (shipped system) | 0.929 | 0.928 | 14.2 | 175 |
-| E_arbiter_only | Arbiter only (every grievance to the LLM) | 0.818 | 0.866 | 61.9 | 1000 |
+| D_full_cascade | Full cascade (shipped system) | 0.929 | 0.928 | 14.4 | 175 |
+| E_arbiter_only | Arbiter only (every grievance to the LLM) | 0.818 | 0.866 | 62.1 | 1000 |
 
 ### Reading the table
 
@@ -51,3 +51,19 @@ Config **E** (arbiter-only) sends 100% of grievances to the LLM. Config **D** (t
 | INDUSTRY | 0.889 | 0.889 | 0.889 | 9 |
 | MINES | 0.889 | 1.000 | 0.941 | 8 |
 | OTHER | 1.000 | 1.000 | 1.000 | 7 |
+
+## Ablation with real multilingual embeddings (run in the build sandbox)
+
+_Provider `local` · model `intfloat/multilingual-e5-small` (384 dims) · 2026-08-05._
+
+Command: `LLM_PROVIDER=local python -m app.cli evaluate --ablation`
+
+| Config | Description | macro-F1 | accuracy | mean ms | LLM calls / 1k |
+| --- | --- | ---: | ---: | ---: | ---: |
+| A_lexical_only | Lexical only | 0.939 | 0.938 | 28.0 | 0 |
+| B_semantic_only | Semantic only | 0.565 | 0.608 | 28.3 | 0 |
+| C_fusion_no_arbiter | Lexical + semantic fusion, no arbiter | 0.930 | 0.928 | 26.2 | 0 |
+| D_full_cascade | Full cascade (shipped system) | 0.939 | 0.938 | 85.6 | 928 |
+| E_arbiter_only | Arbiter only (every grievance to the LLM) | 0.821 | 0.866 | 88.5 | 1000 |
+
+Real embeddings move Config D macro-F1 from 0.929 (mock) to 0.939, and Config C (fusion, no arbiter) improves too. The stand-in is a small 384-dim model used without its query/passage prefixes; its flatter cosine distribution pushes more traffic to the arbiter under the current gate thresholds (which would be re-tuned after re-seeding — see §16). Because embeddings are stored as JSON, the dimensionality change (384 vs the mock's 1024) requires only a **centroid re-seed, not a schema change**. bge-m3 (1024-dim, the exact BeyonData gateway model) is a stronger multilingual model, so it should improve quality further while restoring sharp confidence and a low arbiter-call rate.

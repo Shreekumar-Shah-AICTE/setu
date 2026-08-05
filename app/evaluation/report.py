@@ -158,8 +158,14 @@ def render_markdown(ablation: dict, real_ablation: dict | None = None) -> str:
         lines += [
             "",
             f"Real embeddings move Config D macro-F1 from {d['macro_f1']:.3f} (mock) to "
-            f"{rd['macro_f1']:.3f}. This predicts a comparable lift for bge-m3 on the BeyonData "
-            "gateway, since bge-m3 is a stronger multilingual model than the sandbox stand-in.",
+            f"{rd['macro_f1']:.3f}, and Config C (fusion, no arbiter) improves too. The stand-in is a "
+            f"small {real_ablation.get('dim','?')}-dim model used without its query/passage prefixes; "
+            "its flatter cosine distribution pushes more traffic to the arbiter under the current gate "
+            "thresholds (which would be re-tuned after re-seeding — see §16). Because embeddings are "
+            "stored as JSON, the dimensionality change (384 vs the mock's 1024) requires only a "
+            "**centroid re-seed, not a schema change**. bge-m3 (1024-dim, the exact BeyonData gateway "
+            "model) is a stronger multilingual model, so it should improve quality further while "
+            "restoring sharp confidence and a low arbiter-call rate.",
         ]
 
     lines.append("")
@@ -224,7 +230,12 @@ def render_html(ablation: dict, real_ablation: dict | None = None) -> str:
         <table><thead><tr><th>Config</th><th>Description</th><th>macro-F1</th><th>accuracy</th>
         <th>mean ms</th><th>LLM/1k</th></tr></thead><tbody>{real_rows}</tbody></table>
         <p>Real embeddings move Config D macro-F1 from <b>{d['macro_f1']:.3f}</b> (mock) to
-        <b>{rd['macro_f1']:.3f}</b>, predicting a comparable lift for bge-m3 on the gateway.</p>
+        <b>{rd['macro_f1']:.3f}</b>. The stand-in is a small {real_ablation.get('dim','?')}-dim model
+        (no query/passage prefixes); its flatter cosine distribution pushes more traffic to the
+        arbiter under the current gate thresholds. Because embeddings are stored as JSON, the
+        dimensionality change (384 vs 1024) needs only a <b>centroid re-seed, not a schema change</b>.
+        bge-m3 (1024-dim, the exact gateway model) should improve quality further while restoring
+        sharp confidence.</p>
         """
 
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
