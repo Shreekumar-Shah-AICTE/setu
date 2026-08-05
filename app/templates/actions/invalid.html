@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Link not usable · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="notice red"><strong>This action link cannot be used.</strong> · આ લિંક વાપરી શકાતી નથી.</div>
+  {% if reason == 'used' %}
+    <p>This link has already been used. Each action link works only once.</p>
+    <p class="gu">આ લિંક પહેલેથી વપરાઈ ગઈ છે. દરેક લિંક ફક્ત એક જ વાર કામ કરે છે.</p>
+  {% elif reason == 'expired' %}
+    <p>This link has expired. Please contact the grievance cell if action is still required.</p>
+    <p class="gu">આ લિંક ની સમયમર્યાદા પૂરી થઈ ગઈ છે.</p>
+  {% else %}
+    <p>This link is invalid. Please use the buttons in the original email.</p>
+    <p class="gu">આ લિંક અમાન્ય છે. કૃપા કરી મૂળ ઈમેલમાંની બટન વાપરો.</p>
+  {% endif %}
+  <p><a class="btn ghost" href="/">Back to SETU · પાછા જાઓ</a></p>
+</div>
+{% endblock %}

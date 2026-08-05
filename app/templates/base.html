@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ lang|default('gu') }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}SETU · સેતુ{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script src="/static/js/htmx.min.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><a href="/" style="color:#fff;text-decoration:none;">SETU · સેતુ</a>
+      <small>Smart Escalation &amp; Triage Unit</small></div>
+    <nav>
+      <a href="/">Submit · ફરિયાદ</a>
+      <a href="/track">Track · ટ્રેક</a>
+      <a href="/admin">Admin</a>
+    </nav>
+  </header>
+  <main class="wrap {% block wrapclass %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site">
+    SETU — Smart Escalation &amp; Triage Unit · Government of Gujarat (demonstration system).
+  </footer>
+</body>
+</html>

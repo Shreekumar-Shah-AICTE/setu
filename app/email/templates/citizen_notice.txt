@@ -1,0 +1,15 @@
+SETU · સેતુ
+===========
+
+Dear {{ grievance.citizen_name }} / પ્રિય નાગરિક,
+
+{{ message_en }}
+{{ message_gu }}
+
+Reference / સંદર્ભ : {{ grievance.ref_no }}
+Status / સ્થિતિ    : {{ grievance.status }}
+
+Track your grievance / તમારી ફરિયાદ ટ્રેક કરો:
+{{ track_url }}
+
+SETU — Government of Gujarat (demonstration system).

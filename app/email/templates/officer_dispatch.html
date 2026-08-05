@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;background:#eef1f5;font-family:Arial,'Noto Sans Gujarati',sans-serif;color:#1c2430;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f5;padding:16px 0;">
+<tr><td align="center">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:8px;overflow:hidden;">
+    <tr><td style="background:#1B365D;padding:18px 24px;color:#fff;">
+      <div style="font-size:18px;font-weight:bold;">SETU · સેતુ</div>
+      <div style="font-size:12px;opacity:.85;">Grievance dispatch · ફરિયાદ સોંપણી</div>
+    </td></tr>
+    {% if urgent %}
+    <tr><td style="background:#b3261e;color:#fff;padding:8px 24px;font-weight:bold;font-size:13px;">
+      [URGENT] તાત્કાલિક — this grievance is CRITICAL and requires action within {{ sla_hours }}h.
+    </td></tr>
+    {% endif %}
+    <tr><td style="padding:20px 24px;">
+      <p style="margin:0 0 6px;">Respected {{ officer.name }} ({{ officer.designation_en }}),<br>
+      <span style="color:#556;">માનનીય {{ officer.designation_gu }},</span></p>
+      <p style="margin:0 0 14px;">A grievance has been routed to you for action. કૃપા કરી નીચેની ફરિયાદ પર કાર્યવાહી કરો.</p>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e6ec;border-radius:6px;font-size:14px;">
+        <tr><td style="padding:8px 12px;background:#f6f8fb;width:38%;color:#556;">Reference · સંદર્ભ</td>
+            <td style="padding:8px 12px;font-weight:bold;">{{ grievance.ref_no }}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f6f8fb;color:#556;">Department · વિભાગ</td>
+            <td style="padding:8px 12px;">{{ department.name_en }} / {{ department.name_gu }}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f6f8fb;color:#556;">Classification</td>
+            <td style="padding:8px 12px;">confidence {{ '%.0f'|format(confidence*100) }}% · urgency {{ urgency }} · level {{ level }}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f6f8fb;color:#556;">District · જિલ્લો</td>
+            <td style="padding:8px 12px;">{{ grievance.citizen_district or '—' }}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f6f8fb;color:#556;">Deadline · સમયમર્યાદા</td>
+            <td style="padding:8px 12px;font-weight:bold;color:#b3261e;">{{ deadline }}</td></tr>
+      </table>
+
+      <p style="margin:16px 0 6px;font-weight:bold;">Subject · વિષય</p>
+      <p style="margin:0 0 12px;">{{ grievance.subject }}</p>
+      <p style="margin:0 0 6px;font-weight:bold;">Complaint · ફરિયાદ</p>
+      <div style="margin:0 0 18px;padding:12px;background:#f6f8fb;border-radius:6px;white-space:pre-wrap;">{{ grievance.body_raw }}</div>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="center" style="padding:4px;">
+            <a href="{{ resolve_url }}" style="display:block;background:#2e7d32;color:#fff;text-decoration:none;padding:12px 8px;border-radius:6px;font-weight:bold;font-size:14px;">✅ Mark Resolved<br><span style="font-weight:normal;font-size:12px;">નિરાકરણ થયું</span></a>
+          </td>
+          <td align="center" style="padding:4px;">
+            <a href="{{ escalate_url }}" style="display:block;background:#E8873A;color:#fff;text-decoration:none;padding:12px 8px;border-radius:6px;font-weight:bold;font-size:14px;">⬆️ Forward to Senior<br><span style="font-weight:normal;font-size:12px;">વરિષ્ઠને મોકલો</span></a>
+          </td>
+          <td align="center" style="padding:4px;">
+            <a href="{{ info_url }}" style="display:block;background:#1B365D;color:#fff;text-decoration:none;padding:12px 8px;border-radius:6px;font-weight:bold;font-size:14px;">❓ Request Info<br><span style="font-weight:normal;font-size:12px;">વધુ માહિતી</span></a>
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin:18px 0 0;font-size:12px;color:#889;">Public tracking · જાહેર ટ્રેકિંગ:
+        <a href="{{ track_url }}" style="color:#1B365D;">{{ grievance.ref_no }}</a></p>
+      <p style="margin:6px 0 0;font-size:11px;color:#aab;">These action links are single-use and expire after the deadline. Never mutate state by prefetching — a confirmation page is shown first.</p>
+    </td></tr>
+    <tr><td style="background:#f0f2f6;padding:12px 24px;font-size:11px;color:#889;">
+      SETU — Smart Escalation &amp; Triage Unit · Government of Gujarat (demonstration system).
+    </td></tr>
+  </table>
+</td></tr></table>
+</body></html>

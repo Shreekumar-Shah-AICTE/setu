@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Confirm action · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ action_title_en }} <span class="gu">· {{ action_title_gu }}</span></h1>
+  <p class="muted">Grievance <strong>{{ grievance.ref_no }}</strong> · {{ grievance.department.name_en if grievance.department else '—' }}
+     · <span class="badge indigo">{{ grievance.status }}</span>
+     {% if grievance.urgency == 'CRITICAL' %}<span class="badge crit">CRITICAL</span>{% endif %}</p>
+
+  <p><strong>Subject · વિષય:</strong> {{ grievance.subject }}</p>
+  <div class="notice amber" style="white-space:pre-wrap;">{{ grievance.body_raw }}</div>
+  <p class="muted">Deadline · સમયમર્યાદા: {{ grievance.sla_due_at|ist }} · Current owner: {{ officer.designation_en }}</p>
+
+  <form method="post" action="/action/{{ token }}">
+    {% if action == 'resolve' %}
+      <label for="note">Resolution note · નિરાકરણ નોંધ (required)</label>
+      <textarea id="note" name="note" required placeholder="Describe how the grievance was resolved…"></textarea>
+      <p class="help">This will mark the grievance as RESOLVED and notify the citizen.</p>
+      <button class="btn ok" type="submit">✅ Confirm resolution · નિરાકરણ પુષ્ટિ કરો</button>
+    {% elif action == 'escalate' %}
+      <label for="reason">Reason for forwarding · કારણ (required)</label>
+      <textarea id="reason" name="reason" required placeholder="Why are you forwarding this to your senior?"></textarea>
+      <p class="help">This immediately escalates the grievance to the next level with your written reason.</p>
+      <button class="btn saffron" type="submit">⬆️ Forward to senior · વરિષ્ઠને મોકલો</button>
+    {% else %}
+      <p class="help">This emails the citizen a request for more information and pauses the SLA clock.</p>
+      <button class="btn" type="submit">❓ Request information · વધુ માહિતી માંગો</button>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

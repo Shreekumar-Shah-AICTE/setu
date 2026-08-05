@@ -1,0 +1,36 @@
+{% if urgent %}[URGENT] {% endif %}SETU Grievance {{ grievance.ref_no }}
+================================================================
+
+Respected {{ officer.name }} ({{ officer.designation_en }})
+માનનીય {{ officer.designation_gu }}
+
+A grievance has been routed to you for action.
+કૃપા કરી નીચેની ફરિયાદ પર કાર્યવાહી કરો.
+
+Reference / સંદર્ભ : {{ grievance.ref_no }}
+Department / વિભાગ : {{ department.name_en }} / {{ department.name_gu }}
+Classification     : confidence {{ '%.0f'|format(confidence*100) }}%, urgency {{ urgency }}, level {{ level }}
+District / જિલ્લો   : {{ grievance.citizen_district or '-' }}
+Deadline / સમયમર્યાદા: {{ deadline }}
+
+Subject / વિષય:
+{{ grievance.subject }}
+
+Complaint / ફરિયાદ:
+{{ grievance.body_raw }}
+
+--------------------------------------------------------------
+Please choose an action (single-use links, confirmation page shown first):
+
+  [Mark Resolved / નિરાકરણ થયું]
+  {{ resolve_url }}
+
+  [Forward to Senior / વરિષ્ઠને મોકલો]
+  {{ escalate_url }}
+
+  [Request more information / વધુ માહિતી]
+  {{ info_url }}
+
+Public tracking / જાહેર ટ્રેકિંગ: {{ track_url }}
+--------------------------------------------------------------
+SETU — Smart Escalation & Triage Unit · Government of Gujarat (demonstration system).

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="gu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body style="margin:0;background:#eef1f5;font-family:Arial,'Noto Sans Gujarati',sans-serif;color:#1c2430;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef1f5;padding:16px 0;"><tr><td align="center">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#fff;border-radius:8px;overflow:hidden;">
+    <tr><td style="background:#1B365D;padding:18px 24px;color:#fff;font-size:18px;font-weight:bold;">SETU · સેતુ</td></tr>
+    <tr><td style="padding:20px 24px;">
+      <p style="margin:0 0 12px;">Dear {{ grievance.citizen_name }},<br><span style="color:#556;">પ્રિય નાગરિક,</span></p>
+      <p style="margin:0 0 12px;">{{ message_en }}</p>
+      <p style="margin:0 0 16px;color:#556;">{{ message_gu }}</p>
+      <table role="presentation" width="100%" style="border:1px solid #e2e6ec;border-radius:6px;font-size:14px;">
+        <tr><td style="padding:8px 12px;background:#f6f8fb;width:40%;color:#556;">Reference · સંદર્ભ</td>
+            <td style="padding:8px 12px;font-weight:bold;">{{ grievance.ref_no }}</td></tr>
+        <tr><td style="padding:8px 12px;background:#f6f8fb;color:#556;">Status · સ્થિતિ</td>
+            <td style="padding:8px 12px;">{{ grievance.status }}</td></tr>
+      </table>
+      <p style="margin:16px 0 0;">Track your grievance · તમારી ફરિયાદ ટ્રેક કરો:<br>
+        <a href="{{ track_url }}" style="color:#1B365D;font-weight:bold;">{{ track_url }}</a></p>
+    </td></tr>
+    <tr><td style="background:#f0f2f6;padding:12px 24px;font-size:11px;color:#889;">SETU — Government of Gujarat (demonstration system).</td></tr>
+  </table>
+</td></tr></table>
+</body></html>

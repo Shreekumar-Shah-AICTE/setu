@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Action complete · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="notice green"><strong>{{ heading_en }}</strong> · {{ heading_gu }}</div>
+  <p>{{ detail_en }}</p>
+  <p class="gu">{{ detail_gu }}</p>
+  <p class="muted">Grievance <strong>{{ grievance.ref_no }}</strong> · new status:
+     <span class="badge indigo">{{ grievance.status }}</span></p>
+  <p><a class="btn ghost" href="/track/{{ grievance.ref_no }}">View public tracking · ટ્રેકિંગ જુઓ</a></p>
+</div>
+{% endblock %}
