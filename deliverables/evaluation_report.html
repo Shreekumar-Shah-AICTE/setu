@@ -19,7 +19,7 @@
   .card .l { font-size:12px; color:#556; }
 </style></head><body><div class="wrap">
 <h1>SETU — Evaluation Report</h1>
-<p class="muted">Generated 2026-08-05 22:13 UTC · provider <code>mock</code> · metrics on the held-out <b>test</b> split.</p>
+<p class="muted">Generated 2026-08-05 22:51 UTC · provider <code>mock</code> · metrics on the held-out <b>test</b> split.</p>
 
 <div class="cards">
   <div class="card"><div class="v">0.929</div><div class="l">macro-F1 (headline)</div></div>
@@ -32,7 +32,7 @@
 
 <h2>Ablation: why not just use the LLM for everything?</h2>
 <table><thead><tr><th>Config</th><th>Description</th><th>macro-F1</th><th>accuracy</th>
-<th>mean ms</th><th>LLM/1k</th></tr></thead><tbody><tr class=''><td>A_lexical_only</td><td>Lexical only</td><td>0.939</td><td>0.938</td><td>4.5</td><td>0</td></tr><tr class=''><td>B_semantic_only</td><td>Semantic only</td><td>0.701</td><td>0.742</td><td>4.5</td><td>0</td></tr><tr class=''><td>C_fusion_no_arbiter</td><td>Lexical + semantic fusion, no arbiter</td><td>0.920</td><td>0.917</td><td>4.5</td><td>0</td></tr><tr class='ship'><td>D_full_cascade</td><td>Full cascade (shipped system)</td><td>0.929</td><td>0.928</td><td>14.9</td><td>175</td></tr><tr class=''><td>E_arbiter_only</td><td>Arbiter only (every grievance to the LLM)</td><td>0.818</td><td>0.866</td><td>62.4</td><td>1000</td></tr></tbody></table>
+<th>mean ms</th><th>LLM/1k</th></tr></thead><tbody><tr class=''><td>A_lexical_only</td><td>Lexical only</td><td>0.939</td><td>0.938</td><td>4.3</td><td>0</td></tr><tr class=''><td>B_semantic_only</td><td>Semantic only</td><td>0.701</td><td>0.742</td><td>4.4</td><td>0</td></tr><tr class=''><td>C_fusion_no_arbiter</td><td>Lexical + semantic fusion, no arbiter</td><td>0.920</td><td>0.917</td><td>4.4</td><td>0</td></tr><tr class='ship'><td>D_full_cascade</td><td>Full cascade (shipped system)</td><td>0.929</td><td>0.928</td><td>14.2</td><td>175</td></tr><tr class=''><td>E_arbiter_only</td><td>Arbiter only (every grievance to the LLM)</td><td>0.818</td><td>0.866</td><td>61.9</td><td>1000</td></tr></tbody></table>
 <p>Config <b>E</b> sends every grievance to the LLM; Config <b>D</b> (shipped) reaches comparable
 quality while calling the model on only the ambiguous minority. That gap in <em>LLM calls / 1k</em>
 is the engineering argument of the project.</p>

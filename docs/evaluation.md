@@ -1,6 +1,6 @@
 # SETU — Evaluation Report
 
-_Generated 2026-08-05 22:13 UTC · provider `mock` · metrics on the **held-out test split** only._
+_Generated 2026-08-05 22:51 UTC · provider `mock` · metrics on the **held-out test split** only._
 
 ## Why macro-F1 is the headline metric
 
@@ -14,11 +14,11 @@ Centroids are fit on the **dev** split (40%). Every number below is computed on 
 
 | Config | Description | macro-F1 | accuracy | mean ms | LLM calls / 1k |
 | --- | --- | ---: | ---: | ---: | ---: |
-| A_lexical_only | Lexical only | 0.939 | 0.938 | 4.5 | 0 |
-| B_semantic_only | Semantic only | 0.701 | 0.742 | 4.5 | 0 |
-| C_fusion_no_arbiter | Lexical + semantic fusion, no arbiter | 0.920 | 0.917 | 4.5 | 0 |
-| D_full_cascade | Full cascade (shipped system) | 0.929 | 0.928 | 14.9 | 175 |
-| E_arbiter_only | Arbiter only (every grievance to the LLM) | 0.818 | 0.866 | 62.4 | 1000 |
+| A_lexical_only | Lexical only | 0.939 | 0.938 | 4.3 | 0 |
+| B_semantic_only | Semantic only | 0.701 | 0.742 | 4.4 | 0 |
+| C_fusion_no_arbiter | Lexical + semantic fusion, no arbiter | 0.920 | 0.917 | 4.4 | 0 |
+| D_full_cascade | Full cascade (shipped system) | 0.929 | 0.928 | 14.2 | 175 |
+| E_arbiter_only | Arbiter only (every grievance to the LLM) | 0.818 | 0.866 | 61.9 | 1000 |
 
 ### Reading the table
 
