@@ -1,0 +1,48 @@
+# SETU — optional docker-compose.
+#
+# SETU needs NO Docker for the default demo (SQLite + mock provider):
+#     pip install -r requirements.txt && make demo
+#
+# This file is provided only for teams who prefer PostgreSQL. It brings up a
+# Postgres instance and the SETU app pointed at it. The application code is
+# database-agnostic; switching is purely a matter of DATABASE_URL.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: setu
+      POSTGRES_PASSWORD: setu
+      POSTGRES_DB: setu
+    ports:
+      - "5432:5432"
+    volumes:
+      - setu_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U setu"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # psycopg2-binary must be installed for the postgres driver.
+      DATABASE_URL: postgresql+psycopg2://setu:setu@db:5432/setu
+      LLM_PROVIDER: mock
+      EMAIL_PROVIDER: console
+      SECRET_KEY: change-me-in-production
+      PUBLIC_BASE_URL: http://localhost:8000
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python -m alembic upgrade head &&
+             python -m app.cli seed &&
+             python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  setu_pgdata:

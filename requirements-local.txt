@@ -1,0 +1,13 @@
+# OPTIONAL extras for LLM_PROVIDER=local (Phase 12 / real embeddings).
+#
+# These are DELIBERATELY kept out of requirements.txt so that the default
+# offline install stays lean and `make demo` never downloads model weights.
+# Install only if you want real multilingual sentence embeddings:
+#
+#     pip install -r requirements-local.txt
+#
+# The model weights themselves are downloaded on first use into a cache
+# directory that is git-ignored — never commit weights to the repository.
+
+sentence-transformers>=3.0.0
+torch>=2.2.0

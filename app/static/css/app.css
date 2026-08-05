@@ -1,0 +1,9 @@
+/* SETU — hand-written stylesheet. No framework, no CDN.
+   Filled out fully in the citizen/admin UI phases. */
+:root {
+  --indigo: #1B365D;
+  --saffron: #E8873A;
+  --ink: #1c2430;
+  --bg: #f5f6f8;
+}
+body { margin: 0; font-family: system-ui, sans-serif; color: var(--ink); background: var(--bg); }

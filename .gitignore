@@ -1,0 +1,52 @@
+# SETU .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets — NEVER commit real secrets
+.env
+.env.local
+*.env
+!.env.example
+
+# Databases (generated at runtime)
+*.db
+*.sqlite
+*.sqlite3
+setu.db*
+
+# Generated runtime artifacts
+outbox/*.eml
+outbox/*.html
+!outbox/.gitkeep
+
+# Optional local-model caches (Phase 12 / local provider). NEVER commit weights.
+.model_cache/
+models/
+*.safetensors
+*.gguf
+*.bin
+hf_cache/
+.cache/
+
+# Playwright / browser binaries used only to capture screenshots
+.playwright/
+ms-playwright/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
