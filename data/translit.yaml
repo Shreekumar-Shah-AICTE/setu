@@ -1,0 +1,109 @@
+# Romanised ("Gujlish") -> Gujarati transliteration lexicon.
+# Covers the highest-value keywords across all ten departments so that
+# romanised grievances (gu-latn) can be matched by the lexical stage.
+# Values are expanded and appended to the normalized text before matching.
+mappings:
+  # ---- ENERGY ----
+  light: "લાઇટ"
+  lights: "લાઇટો"
+  lighto: "લાઇટો"
+  vij: "વીજ"
+  veej: "વીજ"
+  vijli: "વીજળી"
+  vijali: "વીજળી"
+  power: "પાવર"
+  transformer: "ટ્રાન્સફોર્મર"
+  andharpat: "અંધારપટ"
+  vijpol: "વીજપોલ"
+  pgvcl: "પીજીવીસીએલ"
+  ugvcl: "યુજીવીસીએલ"
+  mgvcl: "એમજીવીસીએલ"
+  dgvcl: "ડીજીવીસીએલ"
+  geb: "જીઈબી"
+
+  # ---- AGRICULTURE ----
+  khedut: "ખેડૂત"
+  khatar: "ખાતર"
+  urea: "યુરિયા"
+  yuria: "યુરિયા"
+  biyaran: "બિયારણ"
+  kisan: "કિસાન"
+  apmc: "એપીએમસી"
+  marketyard: "માર્કેટયાર્ડ"
+  kheti: "ખેતી"
+  msp: "ટેકાના ભાવ"
+
+  # ---- FOOD_CIVIL ----
+  ration: "રાશન"
+  rationcard: "રાશન કાર્ડ"
+  anaj: "અનાજ"
+  purvatha: "પુરવઠા"
+  puravatha: "પુરવઠા"
+  gas: "ગેસ"
+  agency: "એજન્સી"
+  godaun: "ગોડાઉન"
+
+  # ---- HOME ----
+  police: "પોલીસ"
+  traffic: "ટ્રાફિક"
+  signal: "સિગ્નલ"
+  vahan: "વાહન"
+  crime: "ક્રાઇમ"
+  homeguard: "હોમગાર્ડ"
+  jaam: "જામ"
+
+  # ---- FINANCE ----
+  bank: "બેંક"
+  atm: "એટીએમ"
+  treasury: "ટ્રેઝરી"
+  budget: "બજેટ"
+  nanapanch: "નાણાપંચ"
+
+  # ---- INDUSTRY ----
+  udyog: "ઉદ્યોગ"
+  gidc: "જીઆઇડીસી"
+  factory: "કારખાના"
+  karkhana: "કારખાના"
+  chimni: "ચીમની"
+  chimney: "ચીમની"
+  textile: "ટેક્સટાઈલ"
+  industrial: "ઔદ્યોગિક"
+
+  # ---- MINES ----
+  khanan: "ખનન"
+  khaan: "ખાણ"
+  khaan_alt: "ખાણ"
+  khanij: "ખનીજ"
+  coal: "કોલસા"
+  kolsa: "કોલસા"
+  reti: "રેતી"
+  mineral: "મિનરલ"
+  sand: "રેતી"
+
+  # ---- COTTAGE ----
+  kutir: "કુટિર"
+  toolkit: "ટુલકીટ"
+  tulkit: "ટુલકીટ"
+  kit: "કિટ"
+  vishwakarma: "વિશ્વકર્મા"
+  gramhaat: "ગ્રામહાટ"
+  manav kalyan: "માનવ કલ્યાણ યોજના"
+
+  # ---- ENVIRONMENT ----
+  chemical: "કેમિકલ"
+  kemical: "કેમિકલ"
+  paryavaran: "પર્યાવરણ"
+  dhumado: "ધૂમાડો"
+  smoke: "ધૂમાડો"
+  abhayaran: "અભયારણ"
+  weather: "વેધર"
+
+  # ---- FISHERIES ----
+  machimar: "માછીમાર"
+  machhimar: "માછીમાર"
+  fishing: "માછીમારી"
+  jhinga: "ઝીંગા"
+  prawn: "ઝીંગા"
+  fisheries: "ફિશરિઝ"
+  matsya: "મત્સ્યોદ્યોગ"
+  box fishing: "બોક્સ ફિશિંગ"
