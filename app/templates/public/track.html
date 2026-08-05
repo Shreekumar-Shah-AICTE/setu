@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}{{ grievance.ref_no }} · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="flex">
+    <div>
+      <h1 style="margin-bottom:2px;">{{ grievance.ref_no }}</h1>
+      <div class="muted">{{ grievance.subject }}</div>
+    </div>
+    <div class="spacer"></div>
+    <div>
+      <span class="badge indigo">{{ grievance.status }}</span>
+      {% if grievance.urgency == 'CRITICAL' %}<span class="badge crit">CRITICAL</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="progress" style="margin:16px 0;"><span style="width:{{ progress }}%;"></span></div>
+
+  <ul class="timeline">
+    {% for step in steps %}
+    <li class="{{ step.state }}"><span class="dot"></span>
+      <strong>{{ step.en }}</strong> <span class="gu">· {{ step.gu }}</span>
+      <div class="when">{{ step.when|ist if step.when else ('in progress' if step.state=='active' else 'pending') }}</div>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <table class="data" style="margin-top:12px;">
+    <tr><th>Department · વિભાગ</th><td>{{ grievance.department.name_en ~ ' / ' ~ grievance.department.name_gu if grievance.department else '—' }}</td></tr>
+    <tr><th>Current owner · વર્તમાન અધિકારી</th><td>{{ grievance.assigned_officer.designation_en ~ ' / ' ~ grievance.assigned_officer.designation_gu if grievance.assigned_officer else '—' }}</td></tr>
+    <tr><th>Deadline · સમયમર્યાદા</th><td>{{ grievance.sla_due_at|ist }}</td></tr>
+  </table>
+
+  {% if grievance.status in ['RESOLVED', 'CLOSED'] and grievance.resolution_note %}
+    <div class="notice green" style="margin-top:16px;">
+      <strong>Resolution · નિરાકરણ:</strong> {{ grievance.resolution_note }}
+    </div>
+  {% endif %}
+
+  {% if reopen_ok %}
+    <form method="post" action="/track/{{ grievance.ref_no }}/reopen" style="margin-top:12px;">
+      <button class="btn saffron" type="submit">Reopen (within 7 days) · ફરી ખોલો</button>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Not found · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="notice red">No grievance found for reference <strong>{{ ref_no }}</strong>.
+    <br>આ સંદર્ભ ક્રમાંક માટે કોઈ ફરિયાદ મળી નથી.</div>
+  <p><a class="btn ghost" href="/track">Try again · ફરી પ્રયાસ કરો</a></p>
+</div>
+{% endblock %}

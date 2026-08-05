@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Grievance submitted · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  {% if grievance.status == 'DUPLICATE' %}
+    <div class="notice amber">This issue is already being tracked in your area — no separate action is needed.
+      <br>આ પ્રશ્ન તમારા વિસ્તારમાં પહેલેથી ટ્રેક થઈ રહ્યો છે.</div>
+  {% else %}
+    <div class="notice green">Your grievance has been received. · તમારી ફરિયાદ મળી ગઈ છે.</div>
+  {% endif %}
+
+  <p class="muted">Your reference number · તમારો સંદર્ભ ક્રમાંક</p>
+  <div class="flex" style="align-items:center;">
+    <div id="refno" style="font-size:28px;font-weight:800;color:var(--indigo);letter-spacing:1px;">{{ grievance.ref_no }}</div>
+    <button class="btn ghost" type="button" onclick="copyRef()">Copy · કૉપિ</button>
+    <span id="copied" class="badge green" style="display:none;">Copied!</span>
+  </div>
+
+  <p style="margin-top:16px;">
+    {% if grievance.status == 'NEEDS_REVIEW' %}
+      Expected response: your grievance is under review to confirm the right department.<br>
+      <span class="gu">અપેક્ષિત પ્રતિસાદ: યોગ્ય વિભાગની ખાતરી માટે સમીક્ષા હેઠળ છે.</span>
+    {% elif grievance.sla_due_at %}
+      Expected response by · અપેક્ષિત પ્રતિસાદ: <strong>{{ grievance.sla_due_at|ist }}</strong>
+    {% else %}
+      We will update you on progress. · અમે તમને પ્રગતિની જાણ કરીશું.
+    {% endif %}
+  </p>
+
+  <p><a class="btn" href="/track/{{ grievance.ref_no }}">Track your grievance · ફરિયાદ ટ્રેક કરો</a></p>
+  <p class="muted">Save your reference number to track status anytime at <code>/track</code>.</p>
+</div>
+<script>
+  function copyRef() {
+    var t = document.getElementById('refno').innerText.trim();
+    navigator.clipboard && navigator.clipboard.writeText(t);
+    var c = document.getElementById('copied'); c.style.display = 'inline-block';
+    setTimeout(function(){ c.style.display = 'none'; }, 1500);
+  }
+</script>
+{% endblock %}

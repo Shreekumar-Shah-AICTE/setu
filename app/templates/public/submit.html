@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Submit a grievance · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Submit a grievance <span class="gu">· ફરિયાદ નોંધાવો</span></h1>
+  <p class="muted">Describe your issue in Gujarati or English. SETU routes it to the right department automatically.
+     <br>તમારી ફરિયાદ ગુજરાતી કે અંગ્રેજીમાં લખો — SETU યોગ્ય વિભાગને આપોઆપ મોકલશે.</p>
+
+  <form method="post" action="/submit" novalidate>
+    <label for="citizen_name">Full name · પૂરું નામ</label>
+    <input id="citizen_name" name="citizen_name" value="{{ values.citizen_name|default('') }}" required>
+    {% if errors.citizen_name %}<div class="error">{{ errors.citizen_name[0] }} · {{ errors.citizen_name[1] }}</div>{% endif %}
+
+    <div class="flex">
+      <div style="flex:1;min-width:220px;">
+        <label for="citizen_phone">Mobile · મોબાઈલ નંબર</label>
+        <input id="citizen_phone" name="citizen_phone" value="{{ values.citizen_phone|default('') }}" placeholder="9XXXXXXXXX" required>
+        {% if errors.citizen_phone %}<div class="error">{{ errors.citizen_phone[0] }} · {{ errors.citizen_phone[1] }}</div>{% endif %}
+      </div>
+      <div style="flex:1;min-width:220px;">
+        <label for="citizen_email">Email (optional) · ઈમેલ (વૈકલ્પિક)</label>
+        <input id="citizen_email" name="citizen_email" value="{{ values.citizen_email|default('') }}" placeholder="you@example.com">
+        {% if errors.citizen_email %}<div class="error">{{ errors.citizen_email[0] }} · {{ errors.citizen_email[1] }}</div>{% endif %}
+      </div>
+    </div>
+
+    <label for="citizen_district">District · જિલ્લો</label>
+    <select id="citizen_district" name="citizen_district" required>
+      <option value="">— select · પસંદ કરો —</option>
+      {% for en, gu in districts %}
+        <option value="{{ en }}" {% if values.citizen_district == en %}selected{% endif %}>{{ en }} · {{ gu }}</option>
+      {% endfor %}
+    </select>
+    {% if errors.citizen_district %}<div class="error">{{ errors.citizen_district[0] }} · {{ errors.citizen_district[1] }}</div>{% endif %}
+
+    <label for="subject">Subject · વિષય</label>
+    <input id="subject" name="subject" value="{{ values.subject|default('') }}" required>
+    {% if errors.subject %}<div class="error">{{ errors.subject[0] }} · {{ errors.subject[1] }}</div>{% endif %}
+
+    <label for="body">Grievance details · ફરિયાદની વિગત</label>
+    <textarea id="body" name="body" required placeholder="Describe the problem, location and what you need…">{{ values.body|default('') }}</textarea>
+    {% if errors.body %}<div class="error">{{ errors.body[0] }} · {{ errors.body[1] }}</div>{% endif %}
+
+    <div style="margin-top:16px;">
+      <button class="btn saffron" type="submit">Submit · સબમિટ કરો</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block wrapclass %}narrow{% endblock %}
+{% block title %}Track a grievance · SETU{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Track a grievance <span class="gu">· ફરિયાદ ટ્રેક કરો</span></h1>
+  <form method="get" action="" onsubmit="event.preventDefault(); var r=document.getElementById('ref').value.trim(); if(r) window.location='/track/'+encodeURIComponent(r);">
+    <label for="ref">Reference number · સંદર્ભ ક્રમાંક</label>
+    <input id="ref" name="ref" placeholder="SETU-YYYYMMDD-XXXXXX" required>
+    <div style="margin-top:12px;"><button class="btn" type="submit">Track · ટ્રેક કરો</button></div>
+  </form>
+</div>
+{% endblock %}
