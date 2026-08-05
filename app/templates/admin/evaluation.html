@@ -1,0 +1,34 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Evaluation</h1>
+<form method="post" action="/admin/evaluation/run" style="margin-bottom:14px;">
+  <button class="btn saffron" type="submit">↻ Re-run evaluation (five-config ablation)</button>
+  <span class="muted">Runs on the held-out test split and regenerates the report.</span>
+</form>
+
+<div class="card">
+  <h2>Latest runs</h2>
+  <table class="data">
+    <thead><tr><th>Run</th><th>macro-F1</th><th>accuracy</th><th>weighted-F1</th><th>samples</th><th>when</th></tr></thead>
+    <tbody>
+    {% for r in runs %}
+      <tr><td>{{ r.config.get('config', r.run_name) if r.config else r.run_name }}</td>
+          <td>{{ '%.3f'|format(r.macro_f1 or 0) }}</td>
+          <td>{{ '%.3f'|format(r.accuracy or 0) }}</td>
+          <td>{{ '%.3f'|format(r.weighted_f1 or 0) }}</td>
+          <td>{{ r.sample_count }}</td>
+          <td class="muted">{{ r.created_at|ist('%d %b %H:%M') }}</td></tr>
+    {% else %}<tr><td colspan="6">No evaluation runs yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if report_exists %}
+<div class="card">
+  <h2>Full report</h2>
+  <p><a class="btn ghost" href="/admin/evaluation/report" target="_blank">Open full evaluation report ↗</a></p>
+  <iframe src="/admin/evaluation/report" style="width:100%;height:600px;border:1px solid var(--line);border-radius:8px;"></iframe>
+</div>
+{% endif %}
+{% endblock %}

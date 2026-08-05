@@ -1,0 +1,31 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Review queue</h1>
+<div class="notice green">
+  <strong>{{ counters.corrections }}</strong> corrections absorbed ·
+  <strong>{{ counters.keywords_learned }}</strong> keywords learned
+</div>
+{% for row in rows %}
+<div class="card">
+  <div class="flex">
+    <div>
+      <a href="/admin/grievances/{{ row.g.ref_no }}"><strong>{{ row.g.ref_no }}</strong></a>
+      <span class="badge amber">{{ row.item.reason }}</span>
+      <span class="badge gray">suggested: {{ row.g.department.code if row.g.department else '—' }}</span>
+      <span class="badge gray">conf {{ row.g.confidence|pct(0) }}</span>
+    </div>
+  </div>
+  <p style="margin:8px 0;">{{ row.g.subject }} — <span class="muted">{{ row.g.body_raw[:160] }}</span></p>
+  <form method="post" action="/admin/review/{{ row.item.id }}/correct" class="flex">
+    <select name="corrected_code" style="max-width:220px;">
+      {% for d in departments %}
+      <option value="{{ d.code }}" {% if row.g.department and row.g.department.code==d.code %}selected{% endif %}>{{ d.code }} — {{ d.name_en }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn saffron" type="submit">Correct &amp; reassign</button>
+  </form>
+</div>
+{% else %}
+<div class="card"><p class="muted">The review queue is empty. 🎉</p></div>
+{% endfor %}
+{% endblock %}

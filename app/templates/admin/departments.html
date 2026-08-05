@@ -1,0 +1,31 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Departments &amp; keywords</h1>
+<p class="muted">Adding, toggling or reweighting a keyword rebuilds the matching automaton live and recomputes the department centroid.</p>
+{% for row in dept_rows %}
+<div class="card">
+  <div class="flex">
+    <h2 style="margin:0;">{{ row.d.code }} — {{ row.d.name_en }} <span class="gu">/ {{ row.d.name_gu }}</span></h2>
+    <span class="spacer"></span>
+    <span class="badge {{ 'green' if row.d.is_active else 'gray' }}">{{ 'active' if row.d.is_active else 'inactive' }}</span>
+    {% if row.d.centroid %}<span class="badge indigo">centroid ✓</span>{% endif %}
+  </div>
+  <div style="margin:10px 0;line-height:2.2;">
+    {% for kw in row.keywords %}
+      <span class="badge {{ 'indigo' if kw.source=='seed' else 'amber' }}" title="{{ kw.source }}, weight {{ kw.weight }}, {{ kw.token_count }} token(s){{ '' if kw.is_active else ' (inactive)' }}">
+        {{ kw.term }}{% if not kw.is_active %} ✕{% endif %}
+        <form method="post" action="/admin/departments/keyword/{{ kw.id }}/toggle" style="display:inline;">
+          <button type="submit" style="background:none;border:none;cursor:pointer;color:inherit;">{{ '⏻' }}</button>
+        </form>
+      </span>
+    {% endfor %}
+  </div>
+  <form method="post" action="/admin/departments/keyword/add" class="flex">
+    <input type="hidden" name="department_id" value="{{ row.d.id }}">
+    <input name="term" placeholder="new keyword · નવો કીવર્ડ" style="max-width:260px;">
+    <input name="weight" type="number" step="0.1" value="1.0" style="max-width:90px;" title="weight">
+    <button class="btn ghost" type="submit">+ Add keyword</button>
+  </form>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Grievances <span class="muted" style="font-size:14px;">({{ total }})</span></h1>
+<form method="get" action="/admin/grievances" class="card">
+  <div class="flex">
+    <div style="flex:1;min-width:160px;">
+      <label>Search</label>
+      <input name="q" value="{{ filters.q }}" placeholder="ref, subject, text…">
+    </div>
+    <div style="min-width:150px;">
+      <label>Department</label>
+      <select name="department"><option value="">All</option>
+        {% for d in departments %}<option value="{{ d.code }}" {% if filters.department==d.code %}selected{% endif %}>{{ d.code }}</option>{% endfor %}
+      </select>
+    </div>
+    <div style="min-width:150px;">
+      <label>Status</label>
+      <select name="status"><option value="">All</option>
+        {% for s in statuses %}<option value="{{ s }}" {% if filters.status==s %}selected{% endif %}>{{ s }}</option>{% endfor %}
+      </select>
+    </div>
+    <div style="min-width:120px;">
+      <label>Urgency</label>
+      <select name="urgency"><option value="">All</option>
+        {% for u in ['CRITICAL','HIGH','NORMAL','LOW'] %}<option value="{{ u }}" {% if filters.urgency==u %}selected{% endif %}>{{ u }}</option>{% endfor %}
+      </select>
+    </div>
+    <div style="min-width:100px;">
+      <label>Level</label>
+      <select name="level"><option value="">All</option>
+        {% for l in ['L1','L2','L3'] %}<option value="{{ l }}" {% if filters.level==l %}selected{% endif %}>{{ l }}</option>{% endfor %}
+      </select>
+    </div>
+    <div style="align-self:flex-end;"><button class="btn" type="submit">Filter</button></div>
+  </div>
+</form>
+
+<div class="card" style="overflow-x:auto;">
+<table class="data">
+  <thead><tr><th>Ref</th><th>Subject</th><th>Dept</th><th>Status</th><th>Urg</th><th>Lvl</th><th>District</th><th>Created</th><th>Deadline</th></tr></thead>
+  <tbody>
+  {% for g in rows %}
+    <tr>
+      <td><a href="/admin/grievances/{{ g.ref_no }}">{{ g.ref_no }}</a></td>
+      <td>{{ g.subject[:44] }}</td>
+      <td>{{ g.department.code if g.department else '—' }}</td>
+      <td><span class="badge {{ 'green' if g.status in ['RESOLVED','CLOSED'] else ('red' if g.status=='NEEDS_REVIEW' else 'indigo') }}">{{ g.status }}</span></td>
+      <td>{% if g.urgency=='CRITICAL' %}<span class="badge crit">C</span>{% else %}{{ g.urgency[:1] }}{% endif %}</td>
+      <td>{{ g.current_level or '—' }}</td>
+      <td>{{ g.citizen_district or '—' }}</td>
+      <td class="muted">{{ g.created_at|ist('%d %b %H:%M') }}</td>
+      <td class="muted">{{ g.sla_due_at|ist('%d %b %H:%M') }}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="9">No grievances match.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% if pages > 1 %}
+<div class="flex">
+  {% if page > 1 %}<a class="btn ghost" href="?q={{ filters.q }}&department={{ filters.department }}&status={{ filters.status }}&urgency={{ filters.urgency }}&level={{ filters.level }}&page={{ page-1 }}">← Prev</a>{% endif %}
+  <span class="muted">Page {{ page }} / {{ pages }}</span>
+  {% if page < pages %}<a class="btn ghost" href="?q={{ filters.q }}&department={{ filters.department }}&status={{ filters.status }}&urgency={{ filters.urgency }}&level={{ filters.level }}&page={{ page+1 }}">Next →</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

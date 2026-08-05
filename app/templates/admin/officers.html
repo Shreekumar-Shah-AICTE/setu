@@ -1,0 +1,34 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Officers</h1>
+<div class="card">
+  <h2>Add officer</h2>
+  <form method="post" action="/admin/officers/add" class="flex">
+    <select name="department_id" required>
+      {% for d in departments %}<option value="{{ d.id }}">{{ d.code }}</option>{% endfor %}
+    </select>
+    <select name="level"><option>L1</option><option>L2</option><option>L3</option></select>
+    <input name="name" placeholder="Name" required style="max-width:180px;">
+    <input name="designation_en" placeholder="Designation (EN)" style="max-width:200px;">
+    <input name="designation_gu" placeholder="હોદ્દો (GU)" style="max-width:200px;">
+    <input name="email" placeholder="email@example.gov.in" required style="max-width:220px;">
+    <input name="district" placeholder="District" style="max-width:140px;">
+    <button class="btn ghost" type="submit">+ Add</button>
+  </form>
+</div>
+<div class="card" style="overflow-x:auto;">
+<table class="data">
+  <thead><tr><th>Dept</th><th>Level</th><th>Name</th><th>Designation</th><th>Email</th><th>District</th><th>Active</th><th></th></tr></thead>
+  <tbody>
+  {% for o in officers %}
+    <tr>
+      <td>{{ o.department.code }}</td><td>{{ o.level }}</td><td>{{ o.name }}</td>
+      <td>{{ o.designation_en }}</td><td>{{ o.email }}</td><td>{{ o.district or '—' }}</td>
+      <td>{% if o.is_active %}<span class="badge green">yes</span>{% else %}<span class="badge gray">no</span>{% endif %}</td>
+      <td><form method="post" action="/admin/officers/{{ o.id }}/toggle"><button class="btn ghost" type="submit">toggle</button></form></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

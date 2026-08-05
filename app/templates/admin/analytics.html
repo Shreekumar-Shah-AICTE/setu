@@ -1,0 +1,15 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Analytics</h1>
+<div class="cards">
+  <div class="stat"><div class="v">{{ escalation_rate }}%</div><div class="l">Escalation rate</div></div>
+  <div class="stat"><div class="v">{{ sla_compliance }}%</div><div class="l">SLA compliance</div></div>
+  <div class="stat"><div class="v">{{ resolved_n }}</div><div class="l">Resolved</div></div>
+</div>
+<div class="grid" style="grid-template-columns:1fr 1fr;">
+  <div class="card"><h2>Grievances by department</h2>{{ dept_svg|safe }}</div>
+  <div class="card"><h2>Status distribution</h2>{{ status_svg|safe }}</div>
+</div>
+<div class="card"><h2>30-day intake trend</h2>{{ trend_svg|safe }}</div>
+{% if mrt_svg %}<div class="card"><h2>Mean resolution time by department</h2>{{ mrt_svg|safe }}</div>{% endif %}
+{% endblock %}

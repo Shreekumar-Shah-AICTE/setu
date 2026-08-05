@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Admin · SETU{% endblock %}
+{% macro navlink(key, href, label) %}
+  <a href="{{ href }}" style="{% if active==key %}color:var(--saffron);font-weight:700;{% else %}color:var(--indigo);{% endif %}text-decoration:none;margin-right:14px;">{{ label }}</a>
+{% endmacro %}
+{% block content %}
+<div class="flex" style="margin-bottom:18px;align-items:center;">
+  <strong style="color:var(--indigo);margin-right:16px;">Admin</strong>
+  {{ navlink('dashboard', '/admin', 'Dashboard') }}
+  {{ navlink('grievances', '/admin/grievances', 'Grievances') }}
+  {{ navlink('review', '/admin/review', 'Review') }}
+  {{ navlink('departments', '/admin/departments', 'Departments') }}
+  {{ navlink('officers', '/admin/officers', 'Officers') }}
+  {{ navlink('settings', '/admin/settings', 'Settings') }}
+  {{ navlink('analytics', '/admin/analytics', 'Analytics') }}
+  {{ navlink('evaluation', '/admin/evaluation', 'Evaluation') }}
+  <span class="spacer"></span>
+  {% if provider %}
+    {% set cls = 'red' if not provider.healthy else ('amber' if provider.degraded else 'green') %}
+    <span class="badge {{ cls }}" title="LLM provider health">provider: {{ provider.name }}{% if provider.degraded %} (degraded){% endif %}</span>
+  {% endif %}
+</div>
+{% if provider and provider.degraded %}
+<div class="notice amber">The LLM gateway is unreachable — running on the offline mock provider (degraded). Classifications still work.</div>
+{% endif %}
+{% block admin %}{% endblock %}
+{% endblock %}

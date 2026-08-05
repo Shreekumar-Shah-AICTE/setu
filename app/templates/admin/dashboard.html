@@ -1,0 +1,21 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Dashboard</h1>
+<div class="cards">
+  <div class="stat"><div class="v">{{ total }}</div><div class="l">Total grievances</div></div>
+  <div class="stat"><div class="v">{{ open }}</div><div class="l">Open</div></div>
+  <div class="stat"><div class="v" style="color:var(--bad);">{{ overdue }}</div><div class="l">Overdue (past SLA)</div></div>
+  <div class="stat"><div class="v" style="color:var(--ok);">{{ resolved }}</div><div class="l">Resolved / Closed</div></div>
+  <div class="stat"><div class="v">{{ today }}</div><div class="l">Intake (24h)</div></div>
+  <div class="stat"><div class="v">{{ escalations_24h }}</div><div class="l">Escalations (24h)</div></div>
+  <div class="stat"><div class="v">{{ review_pending }}</div><div class="l">Awaiting review</div></div>
+</div>
+<div class="card">
+  <h2>Department distribution</h2>
+  {{ donut_svg|safe }}
+</div>
+<div class="card">
+  <p><a class="btn" href="/admin/grievances">Browse grievances →</a>
+     <a class="btn ghost" href="/admin/review">Review queue ({{ review_pending }}) →</a></p>
+</div>
+{% endblock %}

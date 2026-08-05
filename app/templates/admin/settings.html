@@ -1,0 +1,28 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<h1>Settings</h1>
+<p class="muted">Changes take effect immediately — no restart required.</p>
+<form method="post" action="/admin/settings">
+  <div class="card">
+    <h2>Classification gating</h2>
+    <div class="flex">
+      <div><label>Fusion α (lexical weight)</label><input name="classify_alpha" type="number" step="0.01" value="{{ cfg.alpha }}"></div>
+      <div><label>Confidence high</label><input name="confidence_high" type="number" step="0.01" value="{{ cfg.confidence_high }}"></div>
+      <div><label>Margin min</label><input name="margin_min" type="number" step="0.01" value="{{ cfg.margin_min }}"></div>
+      <div><label>OTHER threshold</label><input name="other_threshold" type="number" step="0.01" value="{{ cfg.other_threshold }}"></div>
+      <div><label>Review threshold</label><input name="review_threshold" type="number" step="0.01" value="{{ cfg.review_threshold }}"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>SLA policies (global default, hours)</h2>
+    <div class="flex">
+      {% for p in policies %}
+      <div><label>{{ p.level }} ({{ 'business hrs' if p.business_hours_only else '24/7' }})</label>
+        <input name="sla_{{ p.level|lower }}" type="number" step="1" value="{{ p.hours }}"></div>
+      {% endfor %}
+    </div>
+    <p class="muted">SLA_TIME_SCALE currently = <strong>{{ time_scale }}</strong> (set via env; 3600 makes 72h elapse in 72s for demos).</p>
+  </div>
+  <button class="btn saffron" type="submit">Save settings</button>
+</form>
+{% endblock %}

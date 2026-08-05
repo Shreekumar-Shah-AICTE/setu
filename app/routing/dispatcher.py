@@ -252,3 +252,28 @@ async def _notify_citizen(db, grievance, *, message_en, message_gu, kind, provid
         payload={"to": grievance.citizen_email, "message_id": result.message_id,
                  "path": result.path, "provider": result.provider, "ok": result.ok},
     )
+
+
+async def reassign_grievance(
+    db: Session, grievance: Grievance, *, reason: str = "corrected", provider: EmailProvider | None = None
+) -> Officer | None:
+    """Re-route an already-assigned grievance to the officer of its (new) department.
+
+    Used by active learning after a human corrects the department. Keeps the
+    current level; recomputes the SLA; emails the new officer as a thread reply.
+    """
+    provider = provider or get_email_provider()
+    level = grievance.current_level or "L1"
+    officer = select_officer(db, grievance.department_id, level, grievance.citizen_district)
+    if officer is None:
+        return None
+    grievance.assigned_officer_id = officer.id
+    grievance.sla_due_at = compute_sla_due(
+        db, level=level, urgency=grievance.urgency, department_id=grievance.department_id
+    )
+    record_event(
+        db, grievance, "reassigned", actor_type=ActorType.ADMIN,
+        note=reason, payload={"officer_id": officer.id, "level": level},
+    )
+    await _send_officer_email(db, grievance, officer, kind="escalation", provider=provider)
+    return officer

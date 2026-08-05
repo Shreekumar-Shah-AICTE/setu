@@ -1,0 +1,94 @@
+{% extends "admin/_layout.html" %}
+{% block admin %}
+<div class="flex">
+  <div><h1 style="margin-bottom:2px;">{{ g.ref_no }}</h1><div class="muted">{{ g.subject }}</div></div>
+  <span class="spacer"></span>
+  <span class="badge indigo">{{ g.status }}</span>
+  {% if g.urgency=='CRITICAL' %}<span class="badge crit">CRITICAL</span>{% else %}<span class="badge gray">{{ g.urgency }}</span>{% endif %}
+</div>
+
+<div class="card">
+  <table class="data">
+    <tr><th>Citizen</th><td>{{ g.citizen_name }} · {{ g.citizen_phone or '—' }} · {{ g.citizen_email or 'no email' }}</td>
+        <th>District</th><td>{{ g.citizen_district or '—' }}</td></tr>
+    <tr><th>Department</th><td>{{ g.department.name_en ~ ' / ' ~ g.department.name_gu if g.department else '—' }}</td>
+        <th>Secondary</th><td>{{ g.secondary_department_ids|length }} dept(s)</td></tr>
+    <tr><th>Owner</th><td>{{ g.assigned_officer.designation_en if g.assigned_officer else '—' }} ({{ g.current_level or '—' }})</td>
+        <th>Deadline</th><td>{{ g.sla_due_at|ist }}</td></tr>
+    <tr><th>Language</th><td>{{ g.detected_language or '—' }}</td>
+        <th>Confidence</th><td>{{ g.confidence|pct(0) }}</td></tr>
+  </table>
+  <p style="margin-top:10px;"><strong>Complaint:</strong></p>
+  <div class="notice amber" style="white-space:pre-wrap;">{{ g.body_raw }}</div>
+  {% if g.status in ['RESOLVED','CLOSED'] and g.resolution_note %}
+    <div class="notice green"><strong>Resolution:</strong> {{ g.resolution_note }}</div>
+  {% endif %}
+</div>
+
+{% if trace %}
+<div class="card">
+  <h2>⭐ Decision Trace</h2>
+
+  {% set stage = trace.decided_by_stage %}
+  <p>
+    <span class="badge indigo">Stage 1 · lexical</span> →
+    <span class="badge indigo">Stage 2 · semantic + fusion</span>
+    {% if stage == 4 %} → <span class="badge amber">Stage 4 · arbiter</span> → <strong>{{ trace.chosen_department_code }}</strong>
+    {% elif stage == 3 %} → <span class="badge gray">OTHER bucket</span>
+    {% else %} → <span class="badge green">✓ accepted</span>
+    {% endif %}
+    <span class="muted">(score {{ '%.2f'|format(trace.confidence or 0) }}, margin {{ '%.2f'|format(trace.margin or 0) }})</span>
+  </p>
+
+  <h3>1 · Matched keywords (highlighted, colour-coded by department)</h3>
+  <div class="notice" style="background:#f6f8fb;line-height:2;">{{ trace_html.highlight|safe }}</div>
+
+  <div class="grid" style="grid-template-columns:1fr 1fr;">
+    <div><h3>2 · Lexical scores</h3>{{ trace_html.lexical_svg|safe }}</div>
+    <div><h3>3 · Semantic scores</h3>{{ trace_html.semantic_svg|safe }}</div>
+  </div>
+  <h3>4 · Fused scores (threshold shown)</h3>{{ trace_html.fused_svg|safe }}
+
+  {% if trace.arbiter_invoked %}
+  <h3>6 · Arbiter reasoning</h3>
+  {% if trace.arbiter_parsed %}
+    <p><strong>EN:</strong> {{ trace.arbiter_parsed.get('reasoning_en','') }}</p>
+    <p class="gu"><strong>GU:</strong> {{ trace.arbiter_parsed.get('reasoning_gu','') }}</p>
+    <p class="muted">arbiter confidence {{ trace.arbiter_parsed.get('confidence') }} · secondary {{ trace.arbiter_parsed.get('secondary_departments') }}</p>
+  {% endif %}
+  <details><summary>Raw arbiter output</summary>
+    <pre style="white-space:pre-wrap;background:#f6f8fb;padding:10px;border-radius:6px;font-size:12px;">{{ trace.arbiter_raw }}</pre>
+  </details>
+  {% endif %}
+
+  <h3>7 · Latency &amp; provider</h3>
+  <p>
+    Provider: <span class="badge {{ 'amber' if trace.degraded else 'indigo' }}">{{ trace.provider }}{% if trace.degraded %} (degraded){% endif %}</span>
+    {% for k, v in (trace.latency_ms or {}).items() %}<span class="badge gray">{{ k }}: {{ '%.1f'|format(v) }}ms</span> {% endfor %}
+  </p>
+</div>
+{% endif %}
+
+<div class="card">
+  <h2>Event timeline</h2>
+  <ul class="timeline">
+    {% for e in events %}
+    <li class="done"><span class="dot"></span>
+      <strong>{{ e.event_type }}</strong>
+      {% if e.from_status != e.to_status %}<span class="muted">{{ e.from_status }} → {{ e.to_status }}</span>{% endif %}
+      <span class="badge gray">{{ e.actor_type }}</span>
+      <div class="when">{{ e.created_at|ist }} {% if e.note %}· {{ e.note }}{% endif %}</div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Sent emails ({{ sent_emails|length }})</h2>
+  {% for e in sent_emails %}
+    <div class="muted">{{ e.created_at|ist }} → {{ e.payload.get('to') if e.payload else '' }}
+      · {{ e.payload.get('provider') if e.payload else '' }}
+      {% if e.payload and e.payload.get('path') %}· <code>{{ e.payload.get('path').split('/')[-1] }}</code>{% endif %}</div>
+  {% else %}<p class="muted">No emails sent.</p>{% endfor %}
+</div>
+{% endblock %}
