@@ -1,0 +1,35 @@
+# Life-safety and severity signals for urgency triage.
+# A CRITICAL match skips L1, assigns directly to L2, sets a 6-hour SLA and
+# prefixes the officer email subject with [URGENT].
+critical:
+  - "આગ"
+  - "વીજ કરંટ"
+  - "કરંટ"
+  - "કરંટ લાગ્યો"
+  - "મૃત્યુ"
+  - "ઝેરી"
+  - "દૂષિત પાણી"
+  - "ગેસ લીકેજ"
+  - "લીકેજ"
+  - "અકસ્માત"
+  - "બાળક"
+  - "બાળકો"
+  - "વૃદ્ધ"
+  - "હોસ્પિટલ"
+  - "તાત્કાલિક"
+  - "fire"
+  - "electrocution"
+  - "death"
+  - "poison"
+  - "leak"
+  - "collapse"
+
+# High-severity (not life-threatening) signals -> HIGH urgency (SLA x 0.5).
+high:
+  - "તાત્કાલિક કાર્યવાહી"
+  - "અઠવાડિયા"
+  - "દિવસથી"
+  - "વારંવાર"
+  - "urgent"
+  - "immediately"
+  - "repeated"

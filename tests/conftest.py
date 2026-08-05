@@ -27,9 +27,15 @@ from app.seed import seed_all  # noqa: E402
 
 @pytest.fixture(scope="session", autouse=True)
 def _schema_and_seed():
+    import asyncio
+
+    from app.classification.semantic import compute_centroids
+    from app.llm.factory import get_llm_client
+
     Base.metadata.create_all(engine)
     with session_scope() as db:
         seed_all(db)
+        asyncio.run(compute_centroids(db, get_llm_client()))
     yield
 
 

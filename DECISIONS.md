@@ -57,5 +57,65 @@ contained change — nothing else in the codebase touches raw vectors.
 ---
 
 _Further decisions (APScheduler vs Celery, magic links vs officer accounts,
-HTMX vs React, macro-F1 vs accuracy, the mock embedding's honest limitations,
-the OTHER bucket, business-hours SLA) are added in their respective phases._
+HTMX vs React, macro-F1 vs accuracy, business-hours SLA) are added in their
+respective phases._
+
+---
+
+## 4. The mock embedding is an honest lexical approximation, not semantic
+
+**Chosen.** The default `MockLLMClient.embed` uses the feature-hashing trick over
+word unigrams/bigrams and intra-word character 3-grams, producing deterministic
+1024-dimensional unit vectors — the same dimensionality as bge-m3, so swapping
+providers needs no schema change.
+
+**Considered.** Shipping a tiny real model, or leaving embeddings stubbed.
+
+**Why.** It gives *genuine lexical similarity* (texts sharing words and character
+patterns land near each other) with zero network, zero weights and full
+determinism, so the pipeline is honestly exercised offline. It is **not**
+semantic: it cannot tell that "power cut" and "વીજળી ગુલ" mean the same thing
+unless they share characters. Concretely, a grievance whose only routing signal
+is an inflected token such as `વીજપોლનો` (with the keyword `વીજપોલ` fused into a
+suffix) is under-scored, and the blunt OTHER-threshold can send it to review.
+This is expected and is quantified by the ablation harness (§9) and the Phase-12
+real-embedding run — both of which show the semantic stage improving materially
+when bge-m3 replaces the hash.
+
+**What would change it.** Nothing for the offline default; in production
+`LLM_PROVIDER=gateway` uses bge-m3 and the hash disappears entirely.
+
+---
+
+## 5. An explicit OTHER bucket rather than force-fitting
+
+**Chosen.** An eleventh department, OTHER, with no keywords and no centroid.
+Grievances with zero lexical hits and weak semantics are routed here (and queued
+for review) rather than forced into the nearest wrong department.
+
+**Considered.** Always picking the argmax department.
+
+**Why.** The client's list omits Revenue, Health, Education, Water Supply and
+Roads & Buildings. A "primary school has no teacher" complaint has no honest home
+among the ten, and pretending it is (say) COTTAGE destroys trust and pollutes the
+per-department metrics. OTHER keeps unmatched grievances *accountable* and makes
+the review queue the place where new departments/keywords are discovered.
+
+**What would change it.** Adding the missing departments with their own keyword
+sets would shrink OTHER to a true residual.
+
+---
+
+## 6. Marker-first language detection for romanised Gujarati
+
+**Chosen.** When Latin script dominates, check the romanised-Gujarati marker
+list *before* the English word list, so "Gujlish" like `gaam ma light nathi
+aavti` is detected as `gu-latn` even though it contains English-looking tokens
+(`light`, `transformer`).
+
+**Considered.** The literal spec ordering (English first).
+
+**Why.** Function words such as `nathi`, `chhe`, `aavti`, `gaam` are far more
+diagnostic of romanised Gujarati than incidental English loanwords are of
+English. Marker-first makes trap T11 detect correctly and then transliterate to
+the right department. English-only text (no markers) still resolves to `en`.
