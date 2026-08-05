@@ -50,19 +50,18 @@ def _cmd_simulate(args) -> int:
 
 
 def _cmd_evaluate(args) -> int:
+    from app.evaluation.report import run_and_report
+
+    ablation = asyncio.run(run_and_report(provider=args.provider))
     if args.ablation:
-        from app.evaluation.ablation import run_ablation
-
-        result = asyncio.run(run_ablation(provider=args.provider))
-        print(result["table_text"])
+        print(ablation["table_text"])
     else:
-        from app.evaluation.runner import run_evaluation
-
-        result = asyncio.run(run_evaluation(provider=args.provider))
+        d = ablation["detail"]["D_full_cascade"]["metrics"]
         print(
-            f"macro-F1={result['macro_f1']:.3f}  accuracy={result['accuracy']:.3f}  "
-            f"weighted-F1={result['weighted_f1']:.3f}  n={result['sample_count']}"
+            f"macro-F1={d['macro_f1']:.3f}  accuracy={d['accuracy']:.3f}  "
+            f"weighted-F1={d['weighted_f1']:.3f}  top2={d['top2_accuracy']:.3f}  n={d['sample_count']}"
         )
+    print("Reports written: docs/evaluation.md, deliverables/evaluation_report.html")
     return 0
 
 

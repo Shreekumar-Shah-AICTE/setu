@@ -193,10 +193,18 @@ def seed_all(db: Session) -> dict:
     }
 
 
-def run_seed() -> dict:
-    """Entry point used by the CLI: ensure schema, then seed."""
+def run_seed(compute_centroids_after: bool = True) -> dict:
+    """Entry point used by the CLI: ensure schema, seed, then fit centroids."""
     init_db()
     with session_scope() as db:
         summary = seed_all(db)
+    if compute_centroids_after:
+        import asyncio
+
+        from app.classification.semantic import compute_centroids
+        from app.llm.factory import get_llm_client
+
+        with session_scope() as db:
+            asyncio.run(compute_centroids(db, get_llm_client()))
     logger.info("Seed complete: %s", summary)
     return summary
