@@ -119,3 +119,113 @@ aavti` is detected as `gu-latn` even though it contains English-looking tokens
 diagnostic of romanised Gujarati than incidental English loanwords are of
 English. Marker-first makes trap T11 detect correctly and then transliterate to
 the right department. English-only text (no markers) still resolves to `en`.
+
+---
+
+## 7. APScheduler in-process, not Celery
+
+**Chosen.** An `AsyncIOScheduler` runs the SLA sweep every 60s inside the app
+process.
+
+**Considered.** Celery + a broker (Redis/RabbitMQ) + a beat scheduler.
+
+**Why.** The only recurring job is a lightweight 60-second SLA sweep. Celery
+would add a broker, worker processes and deployment complexity for no benefit at
+this scale, and would break the zero-setup promise. Idempotency is enforced in
+the sweep itself (uniqueness on `(grievance_id, to_level)` + a status
+precondition), so a double-run cannot double-escalate.
+
+**What would change it.** Fan-out to thousands of parallel, long-running tasks,
+or a need to survive app restarts mid-job, would justify Celery + a broker.
+
+---
+
+## 8. Officer magic links, not officer accounts
+
+**Chosen.** Every dispatch email carries three signed, single-use, GET-safe
+action links (resolve / forward / info). Officers never log in.
+
+**Considered.** Real officer accounts with passwords/SSO.
+
+**Why.** Field officers act from their inbox on a phone. Accounts create
+friction (onboarding, password resets) that kills adoption. Tokens are 32 bytes
+from a CSPRNG, HMAC-SHA256 signed, stored only as a hash, single-use, and expire
+at `sla_due_at + 48h`. State is never mutated on GET, because scanners prefetch
+links — a confirmation page is shown first, and the POST performs the action.
+
+**What would change it.** A requirement for rich officer dashboards or
+audit-grade per-user identity would justify accounts (SSO), keeping magic links
+as a fast path.
+
+---
+
+## 9. HTMX + server-rendered HTML, not React
+
+**Chosen.** Jinja2 server-rendered pages, one hand-written CSS file, HTMX
+vendored for the occasional partial update. No Node build step.
+
+**Considered.** A React/Vue SPA.
+
+**Why.** The UI is forms, tables, timelines and charts — server rendering is
+simpler, faster to first paint, accessible by default and works offline. Inline
+SVG charts need no JS. A build toolchain would violate the no-Node, no-CDN
+constraint and add weight for little gain.
+
+**What would change it.** Highly interactive, stateful officer tooling (drag/
+drop, live collaborative editing) would justify a SPA.
+
+---
+
+## 10. Macro-F1 as the headline metric, not accuracy
+
+**Chosen.** Report macro-F1 first; also report accuracy, weighted-F1, top-2.
+
+**Considered.** Accuracy as the headline.
+
+**Why.** Departments are imbalanced (ENERGY has many samples, MINES few).
+Accuracy lets a model ace the big classes and quietly fail the small ones;
+macro-F1 averages per-class F1 with equal weight, so a small department counts
+as much as a large one. That is the honest signal for a routing system where
+misrouting a rare department is just as harmful.
+
+**What would change it.** A perfectly balanced label distribution, or a cost
+model that genuinely weights errors by volume, would make weighted metrics more
+appropriate.
+
+---
+
+## 11. Business-hours SLA with a time-scale knob
+
+**Chosen.** SLA deadlines are computed on a Mon–Sat 10:30–18:10 IST business
+calendar (excluding seeded holidays), stored at assignment time so they never
+silently move. `SLA_TIME_SCALE` divides all durations.
+
+**Considered.** Naive wall-clock deadlines.
+
+**Why.** Government offices work business hours; a 72-hour SLA that counts
+nights, Sundays and Diwali would be meaningless and unfair to officers. Storing
+`sla_due_at` at assignment makes the deadline stable and auditable. The
+time-scale knob (e.g. 3600 → 72h in 72s) makes live automatic escalation
+demonstrable in front of an audience without waiting three days. When the clock
+is accelerated the engine switches to wall-clock arithmetic, because business-
+hours maths is meaningless at 3600×.
+
+**What would change it.** A 24×7 emergency service would set
+`business_hours_only=false` per SLA policy.
+
+---
+
+## 12. Synchronous SQLAlchemy under async endpoints
+
+**Chosen.** Async FastAPI endpoints and async LLM calls (httpx), but synchronous
+SQLAlchemy sessions for persistence.
+
+**Considered.** Fully async SQLAlchemy (asyncpg/aiosqlite).
+
+**Why.** SQLite writes are effectively serialised anyway; the queries here are
+sub-millisecond. Sync SQLAlchemy avoids the sharp edges of async DB + Alembic
+and keeps the data layer simple and easy to reason about. The genuinely
+I/O-bound work (LLM/gateway calls) is where async pays off, and that is async.
+
+**What would change it.** A high-concurrency PostgreSQL deployment where DB
+round-trips dominate would justify moving the data layer to async.
