@@ -1,0 +1,73 @@
+# SETU department directory + seed keywords.
+# CONTRACT: keyword strings are reproduced EXACTLY from the source domain data.
+# Do NOT alter, translate, correct or "improve" any keyword — including
+# inconsistent i-matra spellings and the stray space in "હાઈ- ટેન્શન લાઇન".
+departments:
+  - code: INDUSTRY
+    name_en: Industry
+    name_gu: ઉદ્યોગ
+    description: Industrial estates, GIDC, factories and manufacturing.
+    keywords: ["ઉદ્યોગ", "ઉદ્યોગો", "જીઆઇડીસી", "GIDC", "ઔદ્યોગિક", "ઈન્ડસ્ટ્રીયલ", "ઈન્ડસ્ટ્રી", "કારખાના", "ચીમની", "ટેક્સટાઈલ"]
+
+  - code: MINES
+    name_en: Mines & Minerals
+    name_gu: ખાણ-ખનીજ
+    description: Mining, minerals, illegal sand and coal extraction.
+    keywords: ["ખનન", "ખાણ", "ખનીજ", "કોલસા", "રેતી ખનન", "મિનરલ"]
+
+  - code: AGRICULTURE
+    name_en: Agriculture
+    name_gu: કૃષિ
+    description: Farmers, seeds, fertiliser, MSP procurement, APMC markets.
+    keywords: ["કૃષિ", "ખેડૂત", "બિયારણ", "પીએમ કિસાન યોજના", "ખરીફ", "રવિ", "કિસાન સંઘ", "ટેકાના ભાવે", "ટેકાના ભાવ", "ખેડૂતની", "પશુઓ", "પશુદવાખાનુ", "ખાતરની", "ખાતર", "યુરિયા", "ખેતીને", "પાકોની", "એગ્રિકલ્ચર", "એપીએમસી", "માર્કેટયાર્ડ", "કેરી"]
+
+  - code: COTTAGE
+    name_en: Cottage & Rural Industry
+    name_gu: કુટિર અને ગ્રામ્ય ઉદ્યોગ
+    description: Cottage industry schemes, toolkits, Vishwakarma, Manav Kalyan.
+    keywords: ["કીટનું વિતરણ", "કિટ", "ટુલકીટ", "પ્રધાનમંત્રી વિશ્વકર્મા યોજના", "માનવ કલ્યાણ યોજના", "કુટિર ઉદ્યોગ", "ગ્રામહાટ"]
+
+  - code: ENERGY
+    name_en: Energy & Petrochemicals
+    name_gu: ઊર્જા
+    description: Electricity, transformers, discoms (PGVCL/UGVCL/MGVCL/DGVCL), power.
+    keywords: ["વીજ", "લાઈટો", "લાઇટ", "વીજળી", "અંધારપટ", "પાવર", "લો-વોલ્ટેજ", "ટ્રાન્સફોર્મર", "ડીપી", "ટીસી", "વીજપોલ", "હાઈ- ટેન્શન લાઇન", "વીજકંપની", "વીજ કંપની", "પીજીવીસીએલ", "યુજીવીસીએલ", "એમજીવીસીએલ", "ડીજીવીસીએલ", "જીઈબી"]
+
+  - code: HOME
+    name_en: Home
+    name_gu: ગૃહ
+    description: Police, traffic, home guard, vehicles, crime.
+    keywords: ["હોમગાર્ડ", "ટ્રાફિક", "ટ્રાફિક જામ", "સિગ્નલ", "ઓવરલોડિંગ", "પોલીસ", "પોલીસને", "ક્રાઇમ", "રિમાન્ડ", "ચાર્જશીટ", "વાહન"]
+
+  - code: FINANCE
+    name_en: Finance
+    name_gu: નાણા
+    description: Banks, ATMs, treasury, finance commission, budget.
+    keywords: ["એ.ટી.એમ", "બેંકની", "બેંક", "એટીએમ", "નાણા પંચ", "નાણાપંચ", "નાણા વિભાગ", "ટ્રેઝરી", "બજેટ"]
+
+  - code: ENVIRONMENT
+    name_en: Environment & Climate Change
+    name_gu: પર્યાવરણ
+    description: Pollution, chemical waste, sanctuaries, weather stations.
+    keywords: ["કેમિકલ", "અભયારણમાં", "અભયારણ", "પર્યાવરણ", "ધૂમાડો", "કેમિકલ્સ", "રસાયણિક", "વેધર સ્ટેશનનો", "વેધર"]
+
+  - code: FISHERIES
+    name_en: Fisheries
+    name_gu: મત્સ્યોદ્યોગ
+    description: Fishermen, box fishing, prawns, fisheries support.
+    keywords: ["બોક્સ ફિશિંગ", "માછીમારોને", "માછીમાર", "ઝીંગાના", "ઝીંગા", "ફિશરિઝના", "ફિશરિઝ", "માછીમારી", "માછીમારીનો", "મત્સ્યોદ્યોગ"]
+
+  - code: FOOD_CIVIL
+    name_en: Food, Civil Supplies & Consumer Affairs
+    name_gu: અન્ન અને નાગરિક પુરવઠા
+    description: Ration cards, PDS, LPG gas agencies, food safety, godowns.
+    keywords: ["રાશન કાર્ડ", "રેશનીંગ", "રેશનીંગનો", "પુરવઠા વિભાગ", "ગેસ એજન્સી", "અનાજની", "અનાજ", "પુરવઠા", "પુરવઠો", "રાશનના", "પ્રાઈસ શોપ", "ફૂડ સેફટી", "અનાજ ગોડાઉન"]
+
+  # Fallback bucket. The client's list omits Revenue, Health, Education,
+  # Water Supply and Roads & Buildings, so unmatched grievances land here —
+  # accountable, rather than force-fitted into a wrong department.
+  - code: OTHER
+    name_en: Unclassified / Other
+    name_gu: અન્ય
+    description: Fallback for grievances outside the seeded departments (e.g. education, health, water supply, roads, revenue).
+    keywords: []

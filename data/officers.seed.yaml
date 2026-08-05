@@ -1,0 +1,58 @@
+# PLACEHOLDER DIRECTORY — replace with the real officer list before production use.
+# All names are clearly fictional; all addresses are @example.gov.in (non-routable).
+# Three officers per department (L1 taluka, L2 district, L3 state) = 33 total.
+officers:
+  # ---- INDUSTRY ----
+  - {department: INDUSTRY, level: L1, name: "Placeholder — Kirit Solanki", designation_en: "Deputy Engineer (Industries)", designation_gu: "નાયબ ઈજનેર (ઉદ્યોગ)", email: "industry.l1@example.gov.in", phone: "+91-79-0000-0011", district: "Ahmedabad"}
+  - {department: INDUSTRY, level: L2, name: "Placeholder — Bhavna Trivedi", designation_en: "Executive Engineer (Industries)", designation_gu: "કાર્યપાલક ઈજનેર (ઉદ્યોગ)", email: "industry.l2@example.gov.in", phone: "+91-79-0000-0012", district: "Ahmedabad"}
+  - {department: INDUSTRY, level: L3, name: "Placeholder — Naresh Pandya", designation_en: "Superintending Engineer / Nodal Officer (Industries)", designation_gu: "અધિક્ષક ઈજનેર / નોડલ અધિકારી (ઉદ્યોગ)", email: "industry.l3@example.gov.in", phone: "+91-79-0000-0013", district: "Gujarat (State)"}
+
+  # ---- MINES ----
+  - {department: MINES, level: L1, name: "Placeholder — Jayesh Chauhan", designation_en: "Assistant Geologist / Taluka Officer (Mines)", designation_gu: "મદદનીશ ભૂસ્તરશાસ્ત્રી / તાલુકા અધિકારી (ખાણ)", email: "mines.l1@example.gov.in", phone: "+91-2832-00-0021", district: "Kutch"}
+  - {department: MINES, level: L2, name: "Placeholder — Meena Rathod", designation_en: "District Mining Officer", designation_gu: "જિલ્લા ખાણ અધિકારી", email: "mines.l2@example.gov.in", phone: "+91-2832-00-0022", district: "Kutch"}
+  - {department: MINES, level: L3, name: "Placeholder — Dilip Vaghela", designation_en: "Nodal Officer (Geology & Mining)", designation_gu: "નોડલ અધિકારી (ભૂસ્તર અને ખાણ)", email: "mines.l3@example.gov.in", phone: "+91-79-0000-0023", district: "Gujarat (State)"}
+
+  # ---- AGRICULTURE ----
+  - {department: AGRICULTURE, level: L1, name: "Placeholder — Ramesh Patel", designation_en: "Taluka Agriculture Officer", designation_gu: "તાલુકા ખેતીવાડી અધિકારી", email: "agriculture.l1@example.gov.in", phone: "+91-2692-00-0031", district: "Anand"}
+  - {department: AGRICULTURE, level: L2, name: "Placeholder — Sunita Desai", designation_en: "District Agriculture Officer", designation_gu: "જિલ્લા ખેતીવાડી અધિકારી", email: "agriculture.l2@example.gov.in", phone: "+91-2692-00-0032", district: "Anand"}
+  - {department: AGRICULTURE, level: L3, name: "Placeholder — Kanti Prajapati", designation_en: "Joint Director of Agriculture / Nodal Officer", designation_gu: "સંયુક્ત નિયામક (ખેતીવાડી) / નોડલ અધિકારી", email: "agriculture.l3@example.gov.in", phone: "+91-79-0000-0033", district: "Gujarat (State)"}
+
+  # ---- COTTAGE ----
+  - {department: COTTAGE, level: L1, name: "Placeholder — Alpa Mehta", designation_en: "Taluka Industries Officer (Cottage)", designation_gu: "તાલુકા ઉદ્યોગ અધિકારી (કુટિર)", email: "cottage.l1@example.gov.in", phone: "+91-281-00-0041", district: "Rajkot"}
+  - {department: COTTAGE, level: L2, name: "Placeholder — Hiren Joshi", designation_en: "District Industries Centre — General Manager", designation_gu: "જિલ્લા ઉદ્યોગ કેન્દ્ર — મહાપ્રબંધક", email: "cottage.l2@example.gov.in", phone: "+91-281-00-0042", district: "Rajkot"}
+  - {department: COTTAGE, level: L3, name: "Placeholder — Vidya Bhatt", designation_en: "Nodal Officer (Cottage & Rural Industries)", designation_gu: "નોડલ અધિકારી (કુટિર અને ગ્રામ્ય ઉદ્યોગ)", email: "cottage.l3@example.gov.in", phone: "+91-79-0000-0043", district: "Gujarat (State)"}
+
+  # ---- ENERGY ----
+  - {department: ENERGY, level: L1, name: "Placeholder — Ashok Makwana", designation_en: "Deputy Engineer (Discom, Sub-division)", designation_gu: "નાયબ ઈજનેર (વીજ કંપની, પેટા-વિભાગ)", email: "energy.l1@example.gov.in", phone: "+91-79-0000-0051", district: "Surat"}
+  - {department: ENERGY, level: L2, name: "Placeholder — Nita Shah", designation_en: "Executive Engineer (Discom Division)", designation_gu: "કાર્યપાલક ઈજનેર (વીજ વિભાગ)", email: "energy.l2@example.gov.in", phone: "+91-79-0000-0052", district: "Surat"}
+  - {department: ENERGY, level: L3, name: "Placeholder — Bharat Rana", designation_en: "Superintending Engineer / Nodal Officer (Energy)", designation_gu: "અધિક્ષક ઈજનેર / નોડલ અધિકારી (ઊર્જા)", email: "energy.l3@example.gov.in", phone: "+91-79-0000-0053", district: "Gujarat (State)"}
+
+  # ---- HOME ----
+  - {department: HOME, level: L1, name: "Placeholder — Sub-Inspector P. Gohil", designation_en: "Police Sub-Inspector (Taluka)", designation_gu: "પોલીસ સબ-ઇન્સ્પેક્ટર (તાલુકા)", email: "home.l1@example.gov.in", phone: "+91-2764-00-0061", district: "Mehsana"}
+  - {department: HOME, level: L2, name: "Placeholder — Dy.SP R. Chudasama", designation_en: "Deputy Superintendent of Police (District)", designation_gu: "નાયબ પોલીસ અધિક્ષક (જિલ્લા)", email: "home.l2@example.gov.in", phone: "+91-2764-00-0062", district: "Mehsana"}
+  - {department: HOME, level: L3, name: "Placeholder — SP-Nodal S. Zala", designation_en: "Nodal Officer (Home Department)", designation_gu: "નોડલ અધિકારી (ગૃહ વિભાગ)", email: "home.l3@example.gov.in", phone: "+91-79-0000-0063", district: "Gujarat (State)"}
+
+  # ---- FINANCE ----
+  - {department: FINANCE, level: L1, name: "Placeholder — Falguni Amin", designation_en: "Taluka Treasury Officer", designation_gu: "તાલુકા તિજોરી અધિકારી", email: "finance.l1@example.gov.in", phone: "+91-265-00-0071", district: "Vadodara"}
+  - {department: FINANCE, level: L2, name: "Placeholder — Manoj Bhavsar", designation_en: "District Treasury Officer", designation_gu: "જિલ્લા તિજોરી અધિકારી", email: "finance.l2@example.gov.in", phone: "+91-265-00-0072", district: "Vadodara"}
+  - {department: FINANCE, level: L3, name: "Placeholder — Rekha Shukla", designation_en: "Nodal Officer (Finance Department)", designation_gu: "નોડલ અધિકારી (નાણા વિભાગ)", email: "finance.l3@example.gov.in", phone: "+91-79-0000-0073", district: "Gujarat (State)"}
+
+  # ---- ENVIRONMENT ----
+  - {department: ENVIRONMENT, level: L1, name: "Placeholder — Sameer Qureshi", designation_en: "Assistant Environmental Engineer (GPCB, Regional)", designation_gu: "મદદનીશ પર્યાવરણ ઈજનેર (જીપીસીબી, પ્રાદેશિક)", email: "environment.l1@example.gov.in", phone: "+91-79-0000-0081", district: "Bharuch"}
+  - {department: ENVIRONMENT, level: L2, name: "Placeholder — Purvi Nair", designation_en: "Regional Officer (GPCB)", designation_gu: "પ્રાદેશિક અધિકારી (જીપીસીબી)", email: "environment.l2@example.gov.in", phone: "+91-79-0000-0082", district: "Bharuch"}
+  - {department: ENVIRONMENT, level: L3, name: "Placeholder — Girish Modi", designation_en: "Nodal Officer (Environment & Climate Change)", designation_gu: "નોડલ અધિકારી (પર્યાવરણ અને આબોહવા)", email: "environment.l3@example.gov.in", phone: "+91-79-0000-0083", district: "Gujarat (State)"}
+
+  # ---- FISHERIES ----
+  - {department: FISHERIES, level: L1, name: "Placeholder — Jagdish Tandel", designation_en: "Taluka Fisheries Officer", designation_gu: "તાલુકા મત્સ્યોદ્યોગ અધિકારી", email: "fisheries.l1@example.gov.in", phone: "+91-2892-00-0091", district: "Gir Somnath"}
+  - {department: FISHERIES, level: L2, name: "Placeholder — Kavita Solanki", designation_en: "District Fisheries Officer", designation_gu: "જિલ્લા મત્સ્યોદ્યોગ અધિકારી", email: "fisheries.l2@example.gov.in", phone: "+91-2892-00-0092", district: "Gir Somnath"}
+  - {department: FISHERIES, level: L3, name: "Placeholder — Ramila Parmar", designation_en: "Joint Director / Nodal Officer (Fisheries)", designation_gu: "સંયુક્ત નિયામક / નોડલ અધિકારી (મત્સ્યોદ્યોગ)", email: "fisheries.l3@example.gov.in", phone: "+91-79-0000-0093", district: "Gujarat (State)"}
+
+  # ---- FOOD_CIVIL ----
+  - {department: FOOD_CIVIL, level: L1, name: "Placeholder — Mamlatdar (Supply) H. Dave", designation_en: "Taluka Mamlatdar (Civil Supplies)", designation_gu: "તાલુકા મામલતદાર (પુરવઠા)", email: "food_civil.l1@example.gov.in", phone: "+91-2637-00-0101", district: "Navsari"}
+  - {department: FOOD_CIVIL, level: L2, name: "Placeholder — District Supply Officer L. Khant", designation_en: "District Supply Officer", designation_gu: "જિલ્લા પુરવઠા અધિકારી", email: "food_civil.l2@example.gov.in", phone: "+91-2637-00-0102", district: "Navsari"}
+  - {department: FOOD_CIVIL, level: L3, name: "Placeholder — Nodal T. Christian", designation_en: "Nodal Officer (Food & Civil Supplies)", designation_gu: "નોડલ અધિકારી (અન્ન અને નાગરિક પુરવઠા)", email: "food_civil.l3@example.gov.in", phone: "+91-79-0000-0103", district: "Gujarat (State)"}
+
+  # ---- OTHER (fallback bucket) ----
+  - {department: OTHER, level: L1, name: "Placeholder — Taluka Grievance Officer", designation_en: "Taluka Public Grievance Officer", designation_gu: "તાલુકા જાહેર ફરિયાદ અધિકારી", email: "other.l1@example.gov.in", phone: "+91-79-0000-0111", district: "Ahmedabad"}
+  - {department: OTHER, level: L2, name: "Placeholder — District Grievance Officer", designation_en: "District Public Grievance Officer", designation_gu: "જિલ્લા જાહેર ફરિયાદ અધિકારી", email: "other.l2@example.gov.in", phone: "+91-79-0000-0112", district: "Ahmedabad"}
+  - {department: OTHER, level: L3, name: "Placeholder — State Nodal Grievance Officer", designation_en: "State Nodal Grievance Officer (CM Dashboard / SWAGAT)", designation_gu: "રાજ્ય નોડલ ફરિયાદ અધિકારી (સ્વાગત)", email: "other.l3@example.gov.in", phone: "+91-79-0000-0113", district: "Gujarat (State)"}
